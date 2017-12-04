@@ -60,6 +60,7 @@ Name | Description | Default| Type
 `minute` | The minute when to run the refresher if not launched by chef| **0** | _String_
 `weekday` | The weekday when to run the refresher if not launched by chef| **0** | _String_
 `timeout` | The timeout before stopping the mirrorring| **7200** | _String_
+`remove_repo` | Define if a repository has be removed once it is deleted| **true** | _Boolean_
 
 
 **References**:
