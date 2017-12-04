@@ -1,4 +1,4 @@
-kernel-modules Cookbook
+reposync Cookbook
 =======================
 
 [![Cookbook Version][cookbook_version]][cookbook]
@@ -15,21 +15,12 @@ Requirements:
 ### Chef
 * Chef version: >= 12.5.1
 
-Attributes
-----------
-#### kernel_modules
-* `node['reposync']['prefix']` - use to set configuration directory (Default: `/etc/reposync.d`)
-* `node['reposync']['dest_dir']` - use to define where to store the Mirror
-
 Usage
 -----
 Using this cookbook will mirror any rpm repository based on the tool `reposync`.
 
-The `default` recipe is a requirement before using the provider.
-
 For instance:
 ``` ruby
-include_recipe 'reposync'
 reposync_mirror 'couchbase' do
   repofile 'http://packages.couchbase.com/rpm/couchbase-centos62-x86_64.repo'
   update 'chef'
