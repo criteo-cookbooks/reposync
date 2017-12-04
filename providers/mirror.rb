@@ -13,7 +13,7 @@ def whyrun_supported?
 end
 
 def creating_repository
-  repo_file = ::File.join(node['reposync']['prefix'], new_resource.reponame)
+  repo_file = ::File.join(new_resource.conf_dir, new_resource.reponame)
   if new_resource.repofile
     Chef::Log.debug('Repofile is provided')
     remote_file repo_file do
@@ -41,8 +41,8 @@ def creating_repository
 end
 
 def updating_repository
-  repo_file    = ::File.join(node['reposync']['prefix'], new_resource.reponame)
-  reposync_cmd = "reposync -q #{node['reposync']['cmd_args']} --config='#{repo_file}' -r #{new_resource.reponame} --download_path='#{node['reposync']['dest_dir']}'"
+  repo_file    = ::File.join(new_resource.conf_dir, new_resource.reponame)
+  reposync_cmd = "reposync -q #{new_resource.cmd_args} --config='#{repo_file}' -r #{new_resource.reponame} --download_path='#{new_resource.dest_dir}'"
   case new_resource.update
   when /(?i-mx:daily)/, /(?i-mx:weekly)/
     cron "Cron job update: #{new_resource.reponame}" do
@@ -66,15 +66,17 @@ def updating_repository
 end
 
 action :create do
-  target = node['reposync']['prefix']
-  directory target unless ::File.exist?(target)
+  package 'yum-utils'
+  [new_resource.conf_dir, new_resource.dest_dir].each do |d|
+    directory d
+  end
   creating_repository
   updating_repository
 end
 
 action :delete do
   # --[ remove config file ]--
-  file ::File.join(node['reposync']['prefix'], new_resource.reponame) do
+  file ::File.join(new_resource.conf_dir, new_resource.reponame) do
     action :delete
   end
 
@@ -84,7 +86,7 @@ action :delete do
   end
 
   # --[ Remove mirrorring repository ]--
-  directory ::File.join(node['reposync']['dest_dir'], new_resource.reponame) do # ~FC021
+  directory ::File.join(new_resource.dest_dir, new_resource.reponame) do # ~FC021
     recursive true
     action :delete
     only_if { new_resource.remove_repo }

@@ -16,11 +16,3 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-return if node['os'] != 'linux'
-
-include_recipe 'yum-centos'
-package 'yum-utils'
-[node['reposync']['prefix'], node['reposync']['dest_dir']].each do |d|
-  directory d
-end

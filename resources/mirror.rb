@@ -20,3 +20,6 @@ attribute :minute, kind_of: String, default: '0'
 attribute :weekday, kind_of: String, default: '0'
 attribute :timeout, kind_of: String, default: '7200'
 attribute :remove_repo, kind_of: [TrueClass, FalseClass], default: true
+attribute :conf_dir, kind_of: String, default: '/etc/reposync.d'
+attribute :dest_dir, kind_of: String, default: '/var/opt/reposync'
+attribute :cmd_args, kind_of: [String, nil], default: nil

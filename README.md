@@ -61,6 +61,10 @@ Name | Description | Default| Type
 `weekday` | The weekday when to run the refresher if not launched by chef| **0** | _String_
 `timeout` | The timeout before stopping the mirrorring| **7200** | _String_
 `remove_repo` | Define if a repository has be removed once it is deleted| **true** | _Boolean_
+`conf_dir` | Define configuration directory| **/etc/reposync.d** | _String_
+`dest_dir` | Define destination directory| **/var/opt/reposync** | _String_
+`cmd_args` | Define additional command line arguments| **nil** | _[String, nil]_
+
 
 
 **References**:
